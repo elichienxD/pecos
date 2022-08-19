@@ -1,0 +1,142 @@
+{
+ "train_params": {
+  "__meta__": {
+   "class_fullname": "pecos.xmc.xlinear.model###XLinearModel.TrainParams"
+  },
+  "mode": "full-model",
+  "ranker_level": 1,
+  "nr_splits": 32,
+  "min_codes": null,
+  "shallow": false,
+  "rel_mode": "disable",
+  "rel_norm": "no-norm",
+  "hlm_args": {
+   "__meta__": {
+    "class_fullname": "pecos.xmc.base###HierarchicalMLModel.TrainParams"
+   },
+   "neg_mining_chain": [
+    "tfn",
+    "tfn",
+    "tfn",
+    "tfn+man"
+  ],
+   "model_chain": [
+    {
+      "__meta__": {
+        "class_fullname": "pecos.xmc.base###MLModel.TrainParams"
+      },
+      "threshold": 0.001,
+      "max_nonzeros_per_label": null,
+      "solver_type": "L2R_L2LOSS_SVC_DUAL",
+      "Cp": 2.0,
+      "Cn": 1.0,
+      "max_iter": 100,
+      "eps": 0.1,
+      "bias": 1.0,
+      "threads": -1,
+      "verbose": 0
+    },
+    {
+      "__meta__": {
+        "class_fullname": "pecos.xmc.base###MLModel.TrainParams"
+      },
+      "threshold": 0.001,
+      "max_nonzeros_per_label": null,
+      "solver_type": "L2R_L2LOSS_SVC_DUAL",
+      "Cp": 2.0,
+      "Cn": 1.0,
+      "max_iter": 100,
+      "eps": 0.1,
+      "bias": 1.0,
+      "threads": -1,
+      "verbose": 0
+    },
+    {
+      "__meta__": {
+        "class_fullname": "pecos.xmc.base###MLModel.TrainParams"
+      },
+      "threshold": 0.001,
+      "max_nonzeros_per_label": null,
+      "solver_type": "L2R_L2LOSS_SVC_DUAL",
+      "Cp": 2.0,
+      "Cn": 1.0,
+      "max_iter": 100,
+      "eps": 0.1,
+      "bias": 1.0,
+      "threads": -1,
+      "verbose": 0
+    },
+    {
+      "__meta__": {
+        "class_fullname": "pecos.xmc.base###MLModel.TrainParams"
+      },
+      "threshold": 0.001,
+      "max_nonzeros_per_label": null,
+      "solver_type": "L2R_L2LOSS_SVC_DUAL",
+      "Cp": 2.0,
+      "Cn": 1.0,
+      "max_iter": 100,
+      "eps": 0.1,
+      "bias": 1.0,
+      "threads": -1,
+      "verbose": 0
+    }
+  ]
+  }
+ },
+ "pred_params": {
+  "__meta__": {
+   "class_fullname": "pecos.xmc.xlinear.model###XLinearModel.PredParams"
+  },
+  "hlm_args": {
+   "__meta__": {
+    "class_fullname": "pecos.xmc.base###HierarchicalMLModel.PredParams"
+   },
+   "model_chain": [
+    {
+      "__meta__": {
+        "class_fullname": "pecos.xmc.base###MLModel.PredParams"
+      },
+      "only_topk": 100,
+      "post_processor": "l3-hinge"
+    },
+    {
+      "__meta__": {
+        "class_fullname": "pecos.xmc.base###MLModel.PredParams"
+      },
+      "only_topk": 100,
+      "post_processor": "l3-hinge"
+    },
+    {
+      "__meta__": {
+        "class_fullname": "pecos.xmc.base###MLModel.PredParams"
+      },
+      "only_topk": 100,
+      "post_processor": "l3-hinge"
+    },
+    {
+      "__meta__": {
+        "class_fullname": "pecos.xmc.base###MLModel.PredParams"
+      },
+      "only_topk": 100,
+      "post_processor": "noop"
+    }
+  ]
+  }
+ },
+ "indexer_params": {
+  "__meta__": {
+   "class_fullname": "pecos.xmc.base###HierarchicalKMeans.TrainParams"
+  },
+  "nr_splits": 32,
+  "min_codes": null,
+  "max_leaf_size": 100,
+  "imbalanced_ratio": 0.0,
+  "imbalanced_depth": 100,
+  "spherical": true,
+  "seed": 0,
+  "kmeans_max_iter": 20,
+  "threads": -1
+ }
+}
+

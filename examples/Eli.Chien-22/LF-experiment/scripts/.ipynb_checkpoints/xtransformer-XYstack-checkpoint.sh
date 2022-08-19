@@ -1,0 +1,56 @@
+#================= inputs =====================
+model_name=$1
+feature_name=$2
+work_dir="../"
+dname=$3
+topk=20
+
+
+params_path=${work_dir}/scripts/params/xtransformer/${model_name}.json
+
+model_dir="${work_dir}/models/xtransformer/${dname}/${model_name}/${feature_name}/XYstack"
+mkdir -m777 -p ${model_dir}
+
+X_all=${work_dir}/dataset/${dname}/normalized/X_all.txt
+X_trn=${work_dir}/dataset/${dname}/normalized/X.trn.txt
+X_tst=${work_dir}/dataset/${dname}/normalized/X.tst.txt
+
+if [[ $feature_name == "BoW" ]]
+then
+    echo $feature_name
+    feature_dir="${work_dir}/dataset/${dname}"
+    Xf_all=${feature_dir}/X_bow.all.npz
+    Xf_trn=${feature_dir}/X_bow.trn.npz
+    Xf_tst=${feature_dir}/X_bow.tst.npz
+else
+    echo $feature_name
+    feature_dir="${work_dir}/dataset/${dname}/tfidf/${feature_name}/XYstack/normalized"
+    Xf_all=${feature_dir}/X.tfidf.all.npz
+    Xf_trn=${feature_dir}/X.tfidf.trn.npz
+    Xf_tst=${feature_dir}/X.tfidf.tst.npz
+fi
+Y_all=${work_dir}/dataset/${dname}/normalized/Y_all.npz
+
+# ================ training ====================
+
+python3 -m pecos.xmc.xtransformer.train -t ${X_all} -x ${Xf_all} -y ${Y_all} -m ${model_dir} \
+	--params-path ${params_path} \
+	|& tee ${model_dir}/train.log
+    
+# ================ eval ========================
+python3 -m pecos.xmc.xtransformer.predict -t ${X_all} -x ${Xf_all} -m ${model_dir} --only-topk $topk\
+    -o ${model_dir}/P.${topk}.npz \
+    |& tee ${model_dir}/eval_tst.log
+
+python3 -m pecos.xmc.xlinear.evaluate -y ${Y_all} -p ${model_dir}/P.${topk}.npz -k 10 \
+    |& tee ${model_dir}/eval_tst.log
+    
+# =============== get prediction ==============
+python3 -m pecos.xmc.xlinear.predict \
+	-x ${Xf_trn} -m ${model_dir} --only-topk $topk \
+    -o ${model_dir}/P.${topk}.trn.npz 
+    
+python3 -m pecos.xmc.xlinear.predict \
+	-x ${Xf_tst} -m ${model_dir} --only-topk $topk \
+    -o ${model_dir}/P.${topk}.tst.npz 
+    
