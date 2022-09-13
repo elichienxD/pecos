@@ -16,20 +16,22 @@ def main():
 
     cur_dir = f'{args.work_dir}/dataset/{args.dataset}'
     
-    if args.dataset in ['LF-AmazonTitles-131K','LF-WikiSeeAlsoTitles-320K','LF-Amazon-131K','LF-WikiSeeAlso-320K']:
+    if args.dataset in ['LF-AmazonTitles-131K','LF-WikiSeeAlsoTitles-320K','LF-Amazon-131K','LF-WikiSeeAlso-320K','LF-AmazonTitles-1.3M','LF-WikiTitles-500K']:
         # Read files with features and labels (old format from XMLRepo)
         features, tabels, num_samples, num_features, num_labels = data_utils.read_data(f'{cur_dir}/train.txt')
         features = features.astype(np.float32)
         sklearn.preprocessing.normalize(features,copy=False)
         smat.save_npz(f'{cur_dir}/X_bow.trn.npz',features)
         smat.save_npz(f'{cur_dir}/normalized/Y.trn.npz',tabels)
-
+        smat.save_npz(f'{cur_dir}/raw/Y.trn.npz',tabels)
+        
         features, tabels, num_samples, num_features, num_labels = data_utils.read_data(f'{cur_dir}/test.txt')
         features = features.astype(np.float32)
         sklearn.preprocessing.normalize(features,copy=False)
         smat.save_npz(f'{cur_dir}/X_bow.tst.npz',features)
         smat.save_npz(f'{cur_dir}/normalized/Y.tst.npz',tabels)
-
+        smat.save_npz(f'{cur_dir}/raw/Y.tst.npz',tabels)
+        
         TEST = data_utils.read_sparse_file(f'{cur_dir}/Yf.txt',header=True)
         sklearn.preprocessing.normalize(TEST,copy=False)
         smat.save_npz(f"{cur_dir}/Y_bow.npz",TEST)
