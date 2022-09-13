@@ -8,13 +8,13 @@ from tqdm import tqdm
 import argparse
 
 def main():
-    parser = argparse.ArgumentParser(description='PrepareXYstack-raw')
-    parser.add_argument('--work_dir', type=str, default='.')
+    parser = argparse.ArgumentParser(description='PrepareXYstack')
+    parser.add_argument('--work_dir', type=str, default='./')
     parser.add_argument('--dataset', type=str, default='LF-Amazon-131K')
     args = parser.parse_args()
     print(args)
     
-    data_dir= f"{args.work_dir}/dataset/{args.dataset}/raw"
+    data_dir= f"{args.work_dir}/dataset/{args.dataset}/normalized"
     feature_dir = f"{args.work_dir}/dataset/{args.dataset}"
     
     Y = smat.load_npz(f"{data_dir}/Y.trn.npz")

@@ -9,7 +9,7 @@ import argparse
 
 def main():
     parser = argparse.ArgumentParser(description='PrepareXYstack')
-    parser.add_argument('--work_dir', type=str, default='./')
+    parser.add_argument('--work_dir', type=str, default='.')
     parser.add_argument('--dataset', type=str, default='LF-Amazon-131K')
     args = parser.parse_args()
     print(args)

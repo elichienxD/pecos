@@ -5,7 +5,7 @@ import os
 
 def main():
     parser = argparse.ArgumentParser(description='PrepareXYstack')
-    parser.add_argument('--work_dir', type=str, default='./')
+    parser.add_argument('--work_dir', type=str, default='.')
     parser.add_argument('--dataset', type=str, default='LF-Amazon-131K')
     parser.add_argument('--model_name', type=str, default='v0')
     parser.add_argument('--DS_model_names', type=str, default='v0,v0-s1,v0-s2', help="The DS_model_name should be seperated by ','. For example: 'v0,v0-s1,v0-s2'.")
